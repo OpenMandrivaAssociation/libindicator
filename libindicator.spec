@@ -32,7 +32,7 @@ This package contains the shared library files.
  
 %package tools
 Summary:        A debugger for indicators
-Group:          Development/Libraries/Other
+Group:          Development/C
 Requires:       %{libname} = %{version}-%{release}
  
 %description tools
@@ -44,7 +44,7 @@ This package provides some tools for debugging and development purposes.
  
 %package -n %{develname}
 Summary:        Panel indicator applet - library development files
-Group:          Development/Libraries/Other
+Group:          Development/C
 Requires:       %{libname} = %{version}-%{release}
  
 %description -n %{develname}
