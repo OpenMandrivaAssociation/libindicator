@@ -3,7 +3,7 @@
 %define develname %mklibname	indicator -d
  
 Name:           libindicator
-Version:        0.4.1
+Version:        0.5.0
 Release:        1
 License:        GPLv3
 Summary:        Panel indicator applet libraries
