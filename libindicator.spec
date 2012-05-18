@@ -83,7 +83,7 @@ find %{buildroot}%{_libdir} -name '*.la' -type f -delete -print
 %defattr(-,root,root)
 %doc ChangeLog
 %dir %{_datadir}/%{name}
-%{_includedir}/libindicator-0.4/
+%{_includedir}/libindicator3-0.4/
 %{_libdir}/pkgconfig/*.pc
 %{_libdir}/*.so
 %exclude %{_libdir}/libdummy-indicator-*.so
