@@ -1,18 +1,23 @@
-%define	major 7
-%define libname %mklibname	indicator	%{major}
-%define develname %mklibname	indicator -d
+%define	api	3
+%define	major	7
+%define libname	%mklibname indicator %{major}
+%define devname	%mklibname indicator -d
+
+%define libname3	%mklibname indicator %{api} %{major}
+%define devname3	%mklibname indicator %{api} -d
  
-Name:           libindicator
-Version:        0.5.0
-Release:        1
-License:        GPLv3
-Summary:        Panel indicator applet libraries
-Url:            https://launchpad.net/libindicator
-Group:          System/Libraries
-Source:         %{name}-%{version}.tar.gz
-BuildRequires:  pkgconfig(dbus-glib-1)
-BuildRequires:  pkgconfig(gio-unix-2.0)
-BuildRequires:  pkgconfig(gtk+-3.0)
+Summary:	Panel indicator applet libraries
+Name:		libindicator
+Version:	0.5.0
+Release:	2
+License:	GPLv3
+Url:		https://launchpad.net/libindicator
+Group:		System/Libraries
+Source0:	%{name}-%{version}.tar.gz
+BuildRequires:	pkgconfig(dbus-glib-1)
+BuildRequires:	pkgconfig(gio-unix-2.0)
+BuildRequires:	pkgconfig(gtk+-2.0)
+BuildRequires:	pkgconfig(gtk+-3.0)
  
 %description
 Panel indicator applet library
@@ -20,71 +25,82 @@ This library contains information to build indicators to go into the indicator
 applet.
  
 %package -n %{libname}
-Summary:        Panel indicator applet - shared library files
-Group:          System/Libraries
+Summary:	Panel indicator applet - shared library files - gtk+2
+Group:		System/Libraries
  
 %description -n %{libname}
-Panel indicator applet - shared library files.
-This library contains information to build indicators to go into the indicator
-applet.
+This package contains the shared library files - gtk+2.
  
-This package contains the shared library files.
+%package -n %{devname}
+Summary:	Panel indicator applet - library development files - gtk+2
+Group:		Development/C
+Requires:	%{libname} = %{version}-%{release}
  
-%package tools
-Summary:        A debugger for indicators
-Group:          Development/C
-Requires:       %{libname} = %{version}-%{release}
+%description -n %{devname}
+This package contains files that are needed to build applications gtk+2.
  
-%description tools
-Panel indicator applet - tools
-This library contains information to build indicators to go into the indicator
-applet.
+%package -n %{libname3}
+Summary:	Panel indicator applet - shared library files - gtk+3
+Group:		System/Libraries
+Conflicts:	%{name}-tools < 0.5.0-2
  
-This package provides some tools for debugging and development purposes.
+%description -n %{libname3}
+This package contains the shared library files - gtk+3.
  
-%package -n %{develname}
-Summary:        Panel indicator applet - library development files
-Group:          Development/C
-Requires:       %{libname} = %{version}-%{release}
+%package -n %{devname3}
+Summary:	Panel indicator applet - library development files - gtk+3
+Group:		Development/C
+Requires:	%{libname3} = %{version}-%{release}
+Obsoletes:	%{name}-tools < 0.5.0-2
  
-%description -n %{develname}
-Panel indicator applet - library development files.
-This library contains information to build indicators to go into the indicator
-applet.
- 
-This package contains files that are needed to build applications.
+%description -n %{devname3}
+This package contains files that are needed to build applications - gtk+3.
  
 %prep
 %setup -q
+
+mkdir ../gtk3
+cp -a . ../gtk3/
+mv ../gtk3 .
  
 %build
 %configure2_5x \
-  --disable-static
+	--disable-static \
+	--with-gtk=2
+
 %make
+
+pushd gtk3
+%configure2_5x \
+	--disable-static \
+	--with-gtk=3
+
+%make
+popd
 
 %install
 %makeinstall_std
+%makeinstall_std -C gtk3
 
-# Remove libtool archives
-find %{buildroot}%{_libdir} -name '*.la' -type f -delete -print
-
- 
 %files -n %{libname}
-%defattr(-,root,root)
-%doc AUTHORS COPYING
-%{_libdir}/*.so.%{major}* 
+%{_libexecdir}/indicator-loader
+%{_libdir}/libindicator.so.%{major}* 
  
-%files tools
-%defattr(-,root,root)
-%{_libexecdir}/indicator-loader3
-%{_libdir}/libdummy-indicator-*.so
+%files -n %{libname3}
+%{_libexecdir}/indicator-loader%{api}
+%{_libdir}/libindicator%{api}.so.%{major}* 
  
-%files -n %{develname}
-%defattr(-,root,root)
-%doc ChangeLog
+%files -n %{devname}
 %dir %{_datadir}/%{name}
-%{_includedir}/libindicator3-0.4/
-%{_libdir}/pkgconfig/*.pc
-%{_libdir}/*.so
-%exclude %{_libdir}/libdummy-indicator-*.so
+%{_includedir}/libindicator-0.4/
+%{_libdir}/pkgconfig/indicator-0.4.pc
+%{_libdir}/libindicator.so
+
+%files -n %{devname3}
+%doc ChangeLog AUTHORS COPYING
+%{_includedir}/libindicator%{api}-0.4/
 %{_datadir}/%{name}/80indicator-debugging
+%{_libdir}/pkgconfig/indicator%{api}-0.4.pc
+%{_libdir}/libindicator%{api}.so
+%{_libdir}/libdummy-indicator-*.so
+
