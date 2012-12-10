@@ -104,3 +104,23 @@ popd
 %{_libdir}/libindicator%{api}.so
 %{_libdir}/libdummy-indicator-*.so
 
+
+
+%changelog
+* Wed Jun 06 2012 Matthew Dawkins <mattydaw@mandriva.org> 0.5.0-2
++ Revision: 802997
+- rebuild building both gtk3 and gtk2 libs
+- moved loaders to lib pkgs
+- moved testing libexec bins to devel
+- obsoleted tools pkg
+
+* Fri May 18 2012 Crispin Boylan <crisb@mandriva.org> 0.5.0-1
++ Revision: 799510
+- Update major to 7
+- New release
+
+* Tue Nov 01 2011 Matthew Dawkins <mattydaw@mandriva.org> 0.4.1-1
++ Revision: 708184
+- fixed groups
+- imported package libindicator
+
