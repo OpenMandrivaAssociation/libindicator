@@ -9,7 +9,7 @@
 Summary:	Panel indicator applet libraries
 Name:		libindicator
 Version:	12.10.1
-Release:	3
+Release:	4
 License:	GPLv3+
 Group:		System/Libraries
 Url:		https://launchpad.net/libindicator
@@ -98,7 +98,7 @@ mv ../gtk3 .
 %build
 %global optflags %{optflags} -Wno-error=deprecated-declarations
 
-%configure2_5x \
+%configure \
 	--disable-static \
 	--with-gtk=2 \
 	--disable-tests
@@ -106,7 +106,7 @@ mv ../gtk3 .
 %make
 
 pushd gtk3
-%configure2_5x \
+%configure \
 	--disable-static \
 	--with-gtk=3 \
 	--disable-tests
