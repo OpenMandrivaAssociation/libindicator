@@ -9,7 +9,7 @@
 Summary:	Panel indicator applet libraries
 Name:		libindicator
 Version:	12.10.1
-Release:	4
+Release:	5
 License:	GPLv3+
 Group:		System/Libraries
 Url:		https://launchpad.net/libindicator
