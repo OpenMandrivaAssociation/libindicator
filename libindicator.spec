@@ -6,6 +6,8 @@
 %define libname3 %mklibname indicator %{api} %{major}
 %define devname3 %mklibname indicator %{api} -d
 
+%define _disable_rebuild_configure 1
+
 Summary:	Panel indicator applet libraries
 Name:		libindicator
 Version:	12.10.1
@@ -91,12 +93,14 @@ This package contains files that are needed to build applications - gtk+3.
 %prep
 %setup -q
 
+sed -i 's/\$LIBM/ \$LIBM/' configure
+
 mkdir ../gtk3
 cp -a . ../gtk3/
 mv ../gtk3 .
 
 %build
-%global optflags %{optflags} -Wno-error=deprecated-declarations
+%global optflags %{optflags} -Wno-error=deprecated-declarations -Wno-error=gnu-designator
 
 %configure \
 	--disable-static \
