@@ -38,7 +38,7 @@ Group:		System/Libraries
 This package contains the shared library files - gtk+2.
 
 %files -n %{libname}
-%{_libexecdir}/indicator-loader
+#{_libexecdir}/indicator-loader
 %{_libdir}/libindicator.so.%{major}*
 
 #----------------------------------------------------------------------------
