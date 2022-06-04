@@ -93,7 +93,7 @@ This package contains files that are needed to build applications - gtk+3.
 %prep
 %setup -q -c
 
-sed -i 's/\$LIBM/ \$LIBM/' configure
+#sed -i 's/\$LIBM/ \$LIBM/' configure
 
 mkdir ../gtk3
 cp -a . ../gtk3/
