@@ -10,16 +10,17 @@
 
 Summary:	Panel indicator applet libraries
 Name:		libindicator
-Version:	12.10.1
-Release:	6
+Version:	16.10.0
+Release:	1
 License:	GPLv3+
 Group:		System/Libraries
 Url:		https://launchpad.net/libindicator
-Source0:	%{name}-%{version}.tar.gz
+Source0:	https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/libindicator/%{version}+18.04.20180321.1-0ubuntu5/libindicator_%{version}+18.04.20180321.1.orig.tar.gz
 BuildRequires:	pkgconfig(dbus-glib-1)
 BuildRequires:	pkgconfig(gio-unix-2.0)
 BuildRequires:	pkgconfig(gtk+-2.0)
 BuildRequires:	pkgconfig(gtk+-3.0)
+BuildRequires:	pkgconfig(libido3-0.1)
 
 %description
 Panel indicator applet library.
@@ -37,7 +38,7 @@ Group:		System/Libraries
 This package contains the shared library files - gtk+2.
 
 %files -n %{libname}
-%{_libexecdir}/indicator-loader
+#{_libexecdir}/indicator-loader
 %{_libdir}/libindicator.so.%{major}*
 
 #----------------------------------------------------------------------------
@@ -91,9 +92,9 @@ This package contains files that are needed to build applications - gtk+3.
 #----------------------------------------------------------------------------
 
 %prep
-%setup -q
+%setup -q -c
 
-sed -i 's/\$LIBM/ \$LIBM/' configure
+#sed -i 's/\$LIBM/ \$LIBM/' configure
 
 mkdir ../gtk3
 cp -a . ../gtk3/
@@ -101,7 +102,7 @@ mv ../gtk3 .
 
 %build
 %global optflags %{optflags} -Wno-error=deprecated-declarations -Wno-error=gnu-designator
-
+autoreconf -vfi
 %configure \
 	--disable-static \
 	--with-gtk=2 \
@@ -110,6 +111,7 @@ mv ../gtk3 .
 %make
 
 pushd gtk3
+autoreconf -vfi
 %configure \
 	--disable-static \
 	--with-gtk=3 \
