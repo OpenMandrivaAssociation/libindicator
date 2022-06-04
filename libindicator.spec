@@ -101,7 +101,7 @@ mv ../gtk3 .
 
 %build
 %global optflags %{optflags} -Wno-error=deprecated-declarations -Wno-error=gnu-designator
-
+autoreconf -vfi
 %configure \
 	--disable-static \
 	--with-gtk=2 \
@@ -110,6 +110,7 @@ mv ../gtk3 .
 %make
 
 pushd gtk3
+autoreconf -vfi
 %configure \
 	--disable-static \
 	--with-gtk=3 \
