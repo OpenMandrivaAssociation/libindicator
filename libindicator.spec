@@ -16,6 +16,11 @@ License:	GPLv3+
 Group:		System/Libraries
 Url:		https://launchpad.net/libindicator
 Source0:	https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/libindicator/%{version}+18.04.20180321.1-0ubuntu5/libindicator_%{version}+18.04.20180321.1.orig.tar.gz
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	pkgconfig(dbus-glib-1)
 BuildRequires:	pkgconfig(gio-unix-2.0)
 BuildRequires:	pkgconfig(gtk+-2.0)
